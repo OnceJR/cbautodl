@@ -27,5 +27,6 @@ Incluye **monitoreo automático** para comenzar a grabar cuando una modelo se po
 ## 📦 Instalación
 1. Clona este repositorio:
    ```bash
-   git clone https://github.com/usuario/cbautorec.git
+   git clone https://github.com/oncejr/cbautorec.git
    cd cbautorec
+
