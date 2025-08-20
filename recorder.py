@@ -212,7 +212,7 @@ class RecorderManager:
                         logging.debug("%s offline", model_name)
                         await asyncio.sleep(poll_interval)
                 except asyncio.CancelledError:
-                    logging.info("🛑 Monitor cancelled para %s", model_name)
+                    logging.info("🛑 Monitor cancelado para %s", model_name)
                     break
                 except Exception as ex:
                     logging.exception("Error en monitor de %s: %s", model_name, ex)
