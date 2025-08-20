@@ -29,4 +29,18 @@ Incluye **monitoreo automático** para comenzar a grabar cuando una modelo se po
    ```bash
    git clone https://github.com/oncejr/cbautorec.git
    cd cbautorec
-
+   ```
+2. (Opcional) Crea un entorno virtual y actívalo:
+   ```bash
+   python3 -m venv .venv
+   source .venv/bin/activate
+   ```
+3. Instala las dependencias:
+   ```bash
+   pip install -r requirements.txt
+   ```
+4. Configura tus credenciales editando `config.py`.
+5. Ejecuta el bot:
+   ```bash
+   python bot.py
+   ```
