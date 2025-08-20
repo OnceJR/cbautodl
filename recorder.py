@@ -127,6 +127,9 @@ class RecorderManager:
                 rec.proc.kill()
             except Exception:
                 pass
+        except asyncio.CancelledError:
+            # La tarea fue cancelada con éxito; el waiter se encarga de limpiar el proceso
+            pass
         return True
 
     async def record_clip(self, url: str, model_name: str, duration: int = CLIP_DURATION) -> Path:
