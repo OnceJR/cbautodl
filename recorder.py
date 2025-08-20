@@ -109,8 +109,12 @@ class RecorderManager:
         finally:
             # limpiar registro si ya no existe
             self.recordings.pop(model_name, None)
+
+        # Verificar que el proceso terminó correctamente y que el archivo existe
         if proc.returncode != 0 or not out_file.exists():
-            return None
+            raise RuntimeError(
+                f"Grabación fallida para {model_name}: code={proc.returncode}, file={out_file.exists()}"
+            )
         return out_file
 
     async def stop_recording(self, model_name: str) -> bool:
@@ -204,8 +208,15 @@ class RecorderManager:
                     online = await self._is_online_via_ytdlp(url)
                     if online:
                         logging.info("🔔 %s está ONLINE — iniciando grabación automática", model_name)
+
+                        async def _safe_record():
+                            try:
+                                await self.record_stream(url, model_name)
+                            except Exception as ex:  # pragma: no cover - solo logging
+                                logging.error("Error grabando %s: %s", model_name, ex)
+
                         # arrancar la grabación en background y no bloquear el loop de monitor
-                        asyncio.create_task(self.record_stream(url, model_name))
+                        asyncio.create_task(_safe_record())
                         # esperar un tiempo mayor tras detectar online para evitar reintentos excesivos
                         await asyncio.sleep(max(poll_interval, 30))
                     else:
