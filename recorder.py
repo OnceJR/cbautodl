@@ -109,6 +109,8 @@ class RecorderManager:
         finally:
             # limpiar registro si ya no existe
             self.recordings.pop(model_name, None)
+        if proc.returncode != 0 or not out_file.exists():
+            return None
         return out_file
 
     async def stop_recording(self, model_name: str) -> bool:
